@@ -284,7 +284,11 @@ For each function named foo a function name composable-foo is created."
   (composable-create-composable
    (lambda (mark point)
      (interactive (list (mark) (point)))
-     (let ((o (make-overlay composable--start-point point)))
+     (let ((o (make-overlay 
+	       (if (marker-buffer composable--start-point)
+		   composable--start-point
+		   marker)
+	       point)))
 
        (when (and (> composable--count 1)
 		  composable-repeat-copy-save-last)
